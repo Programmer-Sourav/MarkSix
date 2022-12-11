@@ -10,21 +10,23 @@ buttonToTranslate.addEventListener("click", buttonClickHandler)
 
 
 function buttonClickHandler(){
-    var inputText = txtInput.value;
   
-    fetch(getTranslationURL(inputText))
-    .then(response => response.json())
-    .then(json => {
-      var translatedText = json.contents.translated;
-      outputBox.innerText = translatedText;
-      console.log("Translated Text: " + translatedText);
-    })
+    var inputText = textInput.value;
+    var urlToBeFetched = translatedUrlAfterAppendingText(inputText)
+  
+    fetch(urlToBeFetched)
+    .then (response => response.json())
+    .then(json=> {
+      var translatedText = json.contents.translated
+      textOutput.innerText = translatedText
+      console.log("Translated Text "+translatedText)
+   })
     .catch(error => {
       var errorText = "Some error occured in the server. Please come back later.";
       alert(errorText);
       console.log("Error Occured:\n" + error);
     })
 }
-function getTranslationURL(input) {
+function translatedUrlAfterAppendingText(input) {
   return serverURL + "?" + "text=" + input
 }
